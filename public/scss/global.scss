@@ -1,0 +1,75 @@
+@import "./fonts.scss";
+
+html,
+body {
+  margin: 0;
+}
+
+html {
+  font-family: "Montserrat", sans-serif;
+  background-color: #356286;
+}
+
+h1 {
+  text-align: center;
+  text-transform: lowercase;
+  font-size: 3em;
+  font-weight: normal;
+  margin: 2% 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-transform: lowercase;
+  font-family: "Major Mono Display", monospace;
+}
+
+.muted {
+  color: #d6d6d6;
+}
+
+.error {
+  color: #ff4d40;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  &::after {
+    border: 4px solid #818181;
+    border-top: 4px solid #ffffff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    content: "";
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
