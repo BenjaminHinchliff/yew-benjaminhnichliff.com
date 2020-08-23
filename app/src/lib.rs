@@ -2,6 +2,9 @@
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
 
+mod utils;
+use utils::normalize_whitespace;
+
 struct Model {
     link: ComponentLink<Self>,
     res: Res,
@@ -82,11 +85,8 @@ impl Component for Model {
     }
 }
 
-fn normalize_whitespace(string: &str) -> String {
-    String::from(string).split_whitespace().collect::<Vec<&str>>().join(" ")
-}
-
 #[wasm_bindgen]
 pub fn run_app(res: Res) {
+    println!("Hello, world!");
     App::<Model>::new().mount_to_body_with_props(Props::new(res));
 }
