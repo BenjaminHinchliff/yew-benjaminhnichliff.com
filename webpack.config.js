@@ -19,5 +19,23 @@ module.exports = {
         new WasmPackPlugin({
             crateDirectory: path.resolve(__dirname, 'app')
         })
-    ]
-}
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader',
+                ],
+            },
+            {
+                test: /\.(png|jpe?g|gif|woff2?)$/i,
+                use: [
+                    'file-loader'
+                ]
+            }
+        ],
+    },
+};
