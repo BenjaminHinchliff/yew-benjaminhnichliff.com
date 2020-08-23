@@ -1,3 +1,5 @@
-import './scss/global.scss';
+import './scss/home.scss';
 
-import('../app/pkg').catch(console.error);
+import portrait from './assets/self.jpeg';
+
+import('../app/pkg').then(pkg => pkg.run_app(new pkg.Res(portrait))).catch(console.error);

@@ -1,0 +1,52 @@
+@import './global.scss';
+
+#intro {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    background-color: #104570;
+}
+
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: auto;
+    flex: 5 1 30em;
+    background: radial-gradient(#356286 30%, #104570);
+}
+
+#blerb {
+    margin: 1% 5%;
+    font-size: 1.25em;
+    font-weight: 300;
+    text-align: center;
+}
+
+#content {
+    background: linear-gradient(#104570, #356286);
+    overflow: auto;
+}
+
+#projects-header {
+    font-size: 2.25em;
+    margin: 0.2em 0;
+}
+
+#projects-subheader {
+    margin-top: 0.1em;
+}
+
+#portrait {
+    flex: 1 0 auto;
+    width: 10em;
+    height: 25em;
+    object-fit: cover;
+}
+
+@media only screen and (min-width: 425px) {
+    h1 {
+        font-size: 4em;
+    }
+}
