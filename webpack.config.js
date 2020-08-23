@@ -18,10 +18,6 @@ module.exports = {
         }),
         new WasmPackPlugin({
             crateDirectory: path.resolve(__dirname, 'app')
-        }),
-        new webpack.ProvidePlugin({
-            TextDecoder: ['text-encoding', 'TextDecoder'],
-            TextEncoder: ['text-encoding', 'TextEncoder']
         })
     ]
 }
