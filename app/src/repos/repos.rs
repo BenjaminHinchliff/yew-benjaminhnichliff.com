@@ -4,7 +4,6 @@ use yew::services::fetch::{FetchService, Request, Response, FetchTask, FetchOpti
 use yew::format::Json;
 use web_sys::RequestMode;
 use anyhow::Error;
-use log::debug;
 
 use super::repo::Repo;
 
@@ -15,7 +14,7 @@ pub enum Msg {
 }
 
 pub struct Repos {
-    link: ComponentLink<Self>,
+    _link: ComponentLink<Self>,
     task: Option<FetchTask>,
     repos: Vec<Repo>,
 }
@@ -48,7 +47,7 @@ impl Component for Repos {
 
         let task = FetchService::fetch_with_options(get_request, options, callback).unwrap();
 
-        Self { link, task: Some(task), repos: Vec::new() }
+        Self { _link: link, task: Some(task), repos: Vec::new() }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
