@@ -1,4 +1,5 @@
 #![recursion_limit="1024"]
+use log::debug;
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
 
@@ -91,6 +92,5 @@ impl Component for Model {
 pub fn run_app(res: Res) {
     logging::init_logging();
     logging::init_panic();
-    println!("Hello, world!");
     App::<Model>::new().mount_to_body_with_props(Props::new(res));
 }
