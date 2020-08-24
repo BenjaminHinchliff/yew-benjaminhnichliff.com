@@ -3,26 +3,21 @@ use yew::format::Nothing;
 use yew::services::fetch::{FetchService, Request, Response, FetchTask, FetchOptions};
 use yew::format::Json;
 use web_sys::RequestMode;
-use serde::{Serialize, Deserialize};
 use anyhow::Error;
 use log::debug;
 
-#[derive(Serialize, Deserialize, Debug)]
-struct Repo {
-    name: String,
-    created_at: String,
-}
+use crate::repo::Repo;
 
 #[derive(Debug)]
 pub enum Msg {
     Repos(Vec<Repo>),
-    Error(Error),
-    UnknownError,
+    RequestError(String),
 }
 
 pub struct RepoList {
     link: ComponentLink<Self>,
     task: Option<FetchTask>,
+    repos: Vec<Repo>,
 }
 
 impl Component for RepoList {
@@ -42,20 +37,29 @@ impl Component for RepoList {
         let callback = link.callback(|response: Response<Json<Result<Vec<Repo>, Error>>>| {
             if let (meta, Json(Ok(body))) = response.into_parts() {
                 if meta.status.is_success() {
-                    return Msg::Repos(body);
+                    Msg::Repos(body)
+                } else {
+                    Msg::RequestError(format!("{}: {:?}", meta.status, body))
                 }
+            } else {
+                Msg::RequestError("invalid response".to_owned())
             }
-            Msg::UnknownError
         });
 
         let task = FetchService::fetch_with_options(get_request, options, callback).unwrap();
 
-        Self { link, task: Some(task) }
+        Self { link, task: Some(task), repos: Vec::new() }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
-        debug!("{:?}", msg);
-        false
+        match msg {
+            Msg::Repos(repos) => {
+                self.repos = repos;
+                self.task = None;
+                true
+            },
+            _ => unimplemented!(),
+        }
     }
 
     fn change(&mut self, _props: Self::Properties) -> ShouldRender {
@@ -64,7 +68,9 @@ impl Component for RepoList {
 
     fn view(&self) -> Html {
         html! {
-            <p>{ "repo list rs" }</p>
+            <div class="repos">
+                { for self.repos.iter().map(|r| r.render()) }
+            </div>
         }
     }
 }

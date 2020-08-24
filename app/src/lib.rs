@@ -7,6 +7,8 @@ use utils::normalize_whitespace;
 
 mod logging;
 
+mod repo;
+
 mod repo_list;
 use repo_list::RepoList;
 
