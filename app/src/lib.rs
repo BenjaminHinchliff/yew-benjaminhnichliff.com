@@ -7,10 +7,8 @@ use utils::normalize_whitespace;
 
 mod logging;
 
-mod repo;
-
-mod repo_list;
-use repo_list::RepoList;
+mod repos;
+use repos::Repos;
 
 struct Model {
     _link: ComponentLink<Self>,
@@ -83,7 +81,7 @@ impl Component for Model {
                     <p id="projects-subheader" class="text-center muted">
                         { "(more recent years)" }
                     </p>
-                    <RepoList />
+                    <Repos />
                 </div>
                 <p id="copyright" class="muted text-center">
                     { "Copyright (\u{00A9}) 2020 Benjamin Hinchliff" }

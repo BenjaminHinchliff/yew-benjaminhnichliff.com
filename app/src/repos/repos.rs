@@ -6,7 +6,7 @@ use web_sys::RequestMode;
 use anyhow::Error;
 use log::debug;
 
-use crate::repo::Repo;
+use super::repo::Repo;
 
 #[derive(Debug)]
 pub enum Msg {
@@ -14,13 +14,13 @@ pub enum Msg {
     RequestError(String),
 }
 
-pub struct RepoList {
+pub struct Repos {
     link: ComponentLink<Self>,
     task: Option<FetchTask>,
     repos: Vec<Repo>,
 }
 
-impl Component for RepoList {
+impl Component for Repos {
     type Message = Msg;
     type Properties = ();
     
