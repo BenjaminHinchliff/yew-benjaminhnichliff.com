@@ -10,13 +10,14 @@ use super::repo::Repo;
 #[derive(Debug)]
 pub enum Msg {
     Repos(Vec<Repo>),
-    RequestError(String),
+    RequestError,
 }
 
 pub struct Repos {
     _link: ComponentLink<Self>,
     task: Option<FetchTask>,
     repos: Vec<Repo>,
+    errored: bool,
 }
 
 impl Component for Repos {
@@ -36,18 +37,15 @@ impl Component for Repos {
         let callback = link.callback(|response: Response<Json<Result<Vec<Repo>, Error>>>| {
             if let (meta, Json(Ok(body))) = response.into_parts() {
                 if meta.status.is_success() {
-                    Msg::Repos(body)
-                } else {
-                    Msg::RequestError(format!("{}: {:?}", meta.status, body))
+                    return Msg::Repos(body);
                 }
-            } else {
-                Msg::RequestError("invalid response".to_owned())
             }
+            Msg::RequestError
         });
 
         let task = FetchService::fetch_with_options(get_request, options, callback).unwrap();
 
-        Self { _link: link, task: Some(task), repos: Vec::new() }
+        Self { _link: link, task: Some(task), repos: Vec::new(), errored: false }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -57,7 +55,10 @@ impl Component for Repos {
                 self.task = None;
                 true
             },
-            _ => unimplemented!(),
+            Msg::RequestError => {
+                self.errored = true;
+                true
+            }
         }
     }
 
@@ -66,10 +67,20 @@ impl Component for Repos {
     }
 
     fn view(&self) -> Html {
-        html! {
-            <div class="repos">
-                { for self.repos.iter().map(|r| r.render()) }
-            </div>
+        if self.errored {
+            html! {
+                <p class="error text-center">{ "Something went wrong while trying to load projects" }</p> 
+            }
+        } else if self.task.is_some() {
+            html! {
+                <div class="loader" />
+            }
+        } else {
+            html! {
+                <div class="repos">
+                    { for self.repos.iter().map(|r| r.render()) }
+                </div>
+            }
         }
     }
 }
