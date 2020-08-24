@@ -1,5 +1,4 @@
 #![recursion_limit="1024"]
-use log::debug;
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
 
@@ -81,7 +80,7 @@ impl Component for Model {
                     </p>
                 </div>
                 <p id="copyright" class="muted text-center">
-                    { "Copyright (&copy;) 2020 Benjamin Hinchliff" }
+                    { "Copyright (\u{00A9}) 2020 Benjamin Hinchliff" }
                 </p>
             </div>
         }
