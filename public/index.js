@@ -2,4 +2,10 @@ import './scss/home.scss';
 
 import portrait from './assets/self.jpeg';
 
-import('../app/pkg').then(pkg => pkg.run_app(new pkg.Res(portrait))).catch(console.error);
+async function main() {
+  const app = await import('../app/pkg');
+
+  app.run_app(new app.Res(portrait));
+}
+
+main();
