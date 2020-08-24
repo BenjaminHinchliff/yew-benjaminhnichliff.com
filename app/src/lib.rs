@@ -5,8 +5,10 @@ use yew::prelude::*;
 mod utils;
 use utils::normalize_whitespace;
 
+mod logging;
+
 struct Model {
-    link: ComponentLink<Self>,
+    _link: ComponentLink<Self>,
     res: Res,
 }
 
@@ -42,7 +44,7 @@ impl Component for Model {
     type Message = Msg;
     type Properties = Props;
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self { link, res: props.res }
+        Self { _link: link, res: props.res }
     }
 
     fn update(&mut self, _msg: Self::Message) -> ShouldRender {
@@ -87,6 +89,8 @@ impl Component for Model {
 
 #[wasm_bindgen]
 pub fn run_app(res: Res) {
+    logging::init_logging();
+    logging::init_panic();
     println!("Hello, world!");
     App::<Model>::new().mount_to_body_with_props(Props::new(res));
 }
